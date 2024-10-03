@@ -21,18 +21,21 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Update submodules
         run: |
           git submodule update --init --recursive
 
-      - name: Configure CMake
-        run: |
-          mkdir build
-          cd build
-          cmake -G"${{ matrix.generator }}" -DCMAKE_BUILD_TYPE=${{ matrix.config }} -DBUILD_TOOL_TESTS=ON ..\drltrace_src\
-        shell: cmd
+      - name: CMake Configure
+        uses: threeal/cmake-action@v2.0.0
+        with:
+          run-build: false
+          source-dir: drltrace_src
+          build-dir: build
+          options: |
+            CMAKE_BUILD_TYPE=${{ matrix.config }}
+            BUILD_TOOL_TESTS=ON
 
       - name: Build
         run: |
@@ -44,7 +47,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: build-${{ matrix.config }}-${{ matrix.platform }}
-          path: build/ # 빌드된 파일 경로
+          path: build/
 
       - name: Run tests
         run: |
