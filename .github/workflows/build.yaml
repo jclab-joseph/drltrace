@@ -9,15 +9,12 @@ jobs:
     runs-on: windows-2019
     strategy:
       matrix:
-        generator:
-          - "Visual Studio 16 2019"
-          - "Visual Studio 16 2019 Win64"
         config:
           - Debug
           - RelWithDebInfo
         platform:
-          - x86
-          - x86_amd64
+          - Win32
+          - x64
 
     steps:
       - name: Checkout repository
@@ -33,6 +30,7 @@ jobs:
           run-build: false
           source-dir: drltrace_src
           build-dir: build
+          args: "-A ${{ matrix.platform }}"
           options: |
             CMAKE_BUILD_TYPE=${{ matrix.config }}
             BUILD_TOOL_TESTS=ON
