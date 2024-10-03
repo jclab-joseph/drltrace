@@ -4,12 +4,12 @@ on:
   push:
     branches:
       - master
-  tags:
-    - '*'
+    tags:
+      - '*'
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: windows-2022
     strategy:
       matrix:
         generator:
