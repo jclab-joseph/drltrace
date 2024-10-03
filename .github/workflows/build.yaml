@@ -4,6 +4,9 @@ on:
   push: {}
   workflow_dispatch: {}
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: windows-2019
@@ -34,6 +37,8 @@ jobs:
           options: |
             CMAKE_BUILD_TYPE=${{ matrix.config }}
             BUILD_TOOL_TESTS=ON
+            CMAKE_CXX_FLAGS="/utf-8"
+            CMAKE_C_FLAGS="/utf-8"
 
       - name: Build
         run: |
@@ -45,7 +50,11 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: build-${{ matrix.config }}-${{ matrix.platform }}
-          path: build/
+          path: |
+            build/bin*/
+            build/dynamorio/logs/
+            build/dynamorio/bin*/
+            build/dynamorio/lib*/
 
       - name: Run tests
         run: |
