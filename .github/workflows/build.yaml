@@ -55,6 +55,7 @@ jobs:
             build/dynamorio/logs/
             build/dynamorio/bin*/
             build/dynamorio/lib*/
+            !build/dynamorio/libutil/
 
       - name: Run tests
         run: |
