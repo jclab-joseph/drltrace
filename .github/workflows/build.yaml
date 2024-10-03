@@ -6,12 +6,12 @@ on:
 
 jobs:
   build:
-    runs-on: windows-2022
+    runs-on: windows-2019
     strategy:
       matrix:
         generator:
-          - "Visual Studio 12"
-          - "Visual Studio 12 Win64"
+          - "Visual Studio 16 2019"
+          - "Visual Studio 16 2019 Win64"
         config:
           - Debug
           - RelWithDebInfo
